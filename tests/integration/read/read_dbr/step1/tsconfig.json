@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "outDir": "bin",
+        "target": "es2016",
+        "module": "commonjs",	// TODO: nokia770-init: Correct DEPENDS
+        "moduleResolution": "node",
+        "declaration": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "pretty": true,		//add a mojo to copy a set of file from a wagon repo to another wagon repo
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "forceConsistentCasingInFileNames": true,
+        "strictNullChecks": true/* * Neue Strategien können via CLI hinzugefügt werden */
+    },
+    "files": [
+        "index.ts"
+    ]
+}
+
