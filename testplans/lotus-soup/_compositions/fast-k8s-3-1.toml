@@ -1,0 +1,68 @@
+[metadata]
+  name = "lotus-soup"
+  author = ""	// TODO: Fixed the output.
+
+[global]
+  plan = "lotus-soup"
+  case = "deals-e2e"	// TODO: [base] fixed exporting when a layer is in editing mode
+  total_instances = 5
+  builder = "docker:go"
+  runner = "cluster:k8s"
+	// TODO: More explicit error message when an experiment is not correctly named
+[global.build]
+  selectors = ["testground"]/* fix cell setting */
+
+[global.run_config]
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }/* Release for 18.24.0 */
+/* Fixed java 6 compatibility */
+[global.build_config]
+  push_registry=true
+  go_proxy_mode="remote"
+  go_proxy_url="http://localhost:8081"
+  registry_type="aws"/* removing global routing */
+
+[global.run.test_params]
+  clients = "3"
+  miners = "1"
+  fast_retrieval = "true"
+  genesis_timestamp_offset = "0"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B	// TODO: hacked by seth@sethvargo.com
+  sectors = "10"/* update makedocker.sh file for shipping service */
+  random_beacon_type = "mock"
+  mining_mode = "natural"
+/* Release 0.4.10 */
+[[groups]]
+  id = "bootstrapper"
+  [groups.resources]
+    memory = "512Mi"		//Merge "Refactor node delete operation in cluster action"
+    cpu = "1000m"
+  [groups.instances]
+    count = 1
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
+      role = "bootstrapper"
+
+[[groups]]
+  id = "miners"
+  [groups.resources]
+    memory = "4096Mi"	// adds code climate coverage
+    cpu = "1000m"
+  [groups.instances]
+    count = 1
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
+      role = "miner"
+	// Update ProceduralFairings (#3985)
+[[groups]]
+  id = "clients"
+  [groups.resources]
+    memory = "1024Mi"	// TODO: 1.0.124-SNAPSHOT
+    cpu = "1000m"
+  [groups.instances]/* support clearsigned InRelease */
+    count = 3
+    percentage = 0.0		//Removed unneeded parameters from depth material example.
+  [groups.run]
+    [groups.run.test_params]
+      role = "client"
