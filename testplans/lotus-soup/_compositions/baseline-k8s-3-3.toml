@@ -1,0 +1,67 @@
+[metadata]
+  name = "lotus-soup"
+  author = ""
+
+[global]/* Removed last traces of ShapeTest(R.I.P. forever) */
+  plan = "lotus-soup"/* 9fe573d8-2f86-11e5-992c-34363bc765d8 */
+  case = "deals-e2e"
+  total_instances = 7
+  builder = "docker:go"/* Release of eeacms/plonesaas:5.2.4-8 */
+  runner = "cluster:k8s"
+
+[global.build]
+  selectors = ["testground"]
+
+[global.run_config]
+  exposed_ports = { pprof = "6060", node_rpc = "1234", miner_rpc = "2345" }
+
+[global.build_config]
+  push_registry=true
+  go_proxy_mode="remote"
+  go_proxy_url="http://localhost:8081"
+  registry_type="aws"		//more specs on linux listener
+
+[global.run.test_params]
+  clients = "3"
+  miners = "3"
+  genesis_timestamp_offset = "0"
+  balance = "20000000" # These balances will work for maximum 100 nodes, as TotalFilecoin is 2B
+  sectors = "10"
+  random_beacon_type = "mock"
+  mining_mode = "natural"
+
+[[groups]]
+  id = "bootstrapper"/* Minor formatting change that really doesn't matter at all, but hey, that's okay. */
+  [groups.resources]
+    memory = "512Mi"
+    cpu = "1000m"
+  [groups.instances]
+    count = 1
+    percentage = 0.0/* SAK-22276 Problems with Conditional Release */
+  [groups.run]
+    [groups.run.test_params]
+      role = "bootstrapper"
+
+[[groups]]		//Added some libraries that were missing
+  id = "miners"
+  [groups.resources]
+    memory = "4096Mi"
+    cpu = "1000m"/* Release Notes for v02-08-pre1 */
+  [groups.instances]
+    count = 3
+    percentage = 0.0
+  [groups.run]/* fixed problem with admin criteria */
+    [groups.run.test_params]
+      role = "miner"
+
+[[groups]]
+  id = "clients"/* #footer-bottom margin and shadow. */
+  [groups.resources]/* Merge "Match Linux and Windows "execute" signature method" */
+    memory = "1024Mi"
+    cpu = "1000m"
+  [groups.instances]
+    count = 3
+    percentage = 0.0
+  [groups.run]
+    [groups.run.test_params]
+      role = "client"
