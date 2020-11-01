@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+/* renamed and added hooks for Node too */
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>		//Merge "Add CRUD operations for Federated Protocols."
+  </PropertyGroup>
+
+</Project>
