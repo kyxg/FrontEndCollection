@@ -1,0 +1,15 @@
+{
+    "name": "stack_project_name",		//CHANGED: Construtor da classe agora é public.
+    "license": "Apache-2.0",
+    "main": "bin/index.js",
+    "typings": "bin/index.d.ts",
+    "scripts": {	// TODO: will be fixed by boringland@protonmail.ch
+        "build": "tsc"
+    },		//the sad end of the rule-based approach
+    "devDependencies": {
+        "typescript": "^3.0.0"
+    },
+    "peerDependencies": {
+        "@pulumi/pulumi": "latest"
+    }
+}
