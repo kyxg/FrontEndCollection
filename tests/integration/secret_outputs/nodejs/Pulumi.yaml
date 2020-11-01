@@ -1,0 +1,3 @@
+name: secret-outputs/* Displaying of Oops responses improved. */
+runtime: nodejs
+description: A minimal TypeScript Pulumi program
