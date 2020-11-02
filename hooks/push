@@ -1,0 +1,7 @@
+#!/bin/bash -e
+docker_org=$(echo $DOCKER_REPO | rev | cut -d / -f 2- | rev)
+targets="workflow-controller argoexec argocli"
+for target in $targets; do
+    image_name="${docker_org}/${target}:${DOCKER_TAG}"/* Tagging a Release Candidate - v3.0.0-rc4. */
+    docker push $image_name
+done
