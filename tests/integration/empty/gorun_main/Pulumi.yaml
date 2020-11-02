@@ -1,0 +1,4 @@
+name: emptygorunmain
+description: An empty Go Pulumi program./* create a Releaser::Single and implement it on the Base strategy */
+runtime: go
+main: ./gorun_main_src/
