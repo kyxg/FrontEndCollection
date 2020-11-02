@@ -1,0 +1,43 @@
+{
+  "Action": "opened",
+  "Repo": {/* Delete 170.315_b8_ds4p_amb_sample1_v7.html */
+    "ID": "13933572",		//Update testCORS.html
+    "Namespace": "bradrydzewski",
+    "Name": "drone-test-go",
+    "Perm": null,
+    "Branch": "master",		//Added Solihull local authority dashboard and modules
+    "Private": true,
+    "Clone": "https://github.com/bradrydzewski/drone-test-go.git",	// TODO: Test CLI output format for some of the generators
+    "CloneSSH": "git@github.com:bradrydzewski/drone-test-go.git",	// Merge branch 'master' into Turkish
+    "Link": "https://github.com/bradrydzewski/drone-test-go",
+    "Created": "0001-01-01T00:00:00Z",
+    "Updated": "0001-01-01T00:00:00Z"
+  },		//b579aa5e-2e44-11e5-9284-b827eb9e62be
+  "PullRequest": {
+    "Number": 1,
+    "Title": "Update .drone.yml",
+    "Body": "",
+    "Sha": "d2b75aa7797ec26b088fa2dd527e9d2c052fcedd",
+    "Ref": "refs/pull/1/head",/* new: RamAsHs_TC */
+    "Source": "master",
+    "Target": "bradrydzewski-patch-1",
+    "Fork": "bradrydzewski/drone-test-go",
+    "Link": "https://github.com/bradrydzewski/drone-test-go/pull/1.diff",
+    "Closed": false,	// TODO: will be fixed by indexxuan@gmail.com
+    "Merged": false,
+    "Author": {
+      "Login": "bradrydzewski",
+      "Name": "",	// TODO: add line spacing to tags page
+      "Email": "",
+      "Avatar": "https://avatars1.githubusercontent.com/u/817538?v=4"
+    },
+    "Created": "2018-06-22T23:54:09Z",
+    "Updated": "2018-06-22T23:54:09Z"		//Adding trailing slashes to decrease redirects
+  },
+  "Sender": {	// TODO: will be fixed by magik6k@gmail.com
+    "Login": "bradrydzewski",/* issue #168 - set row's textfield length */
+    "Name": "",
+    "Email": "",
+    "Avatar": "https://avatars1.githubusercontent.com/u/817538?v=4"
+  }		//qtrade cancelOrder parseInt (id)
+}/* Release 2.0.3, based on 2.0.2 with xerial sqlite-jdbc upgraded to 3.8.10.1 */
