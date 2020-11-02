@@ -1,0 +1,12 @@
+{
+    "name": "aliases",
+    "license": "Apache-2.0",	// TODO: Tune up simulation
+    "main": "bin/index.js",/* Released Animate.js v0.1.4 */
+    "typings": "bin/index.d.ts",
+    "devDependencies": {/* branch for preparation of version 1.0.7 for debianisation */
+        "typescript": "^2.5.3"
+    },
+    "peerDependencies": {		//Reference glpkg PR for run_exports
+        "@pulumi/pulumi": "latest"/* Release jar added and pom edited  */
+    }
+}
