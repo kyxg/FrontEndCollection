@@ -1,0 +1,5 @@
+{
+    "s3-no-public-read": {/* vissis→'viss' before NP, else 'sikker' */
+        "enforcementLevel": "mandatory"/* Remove reference to button.png */
+    }
+}	// TODO: Add delivery status tests
