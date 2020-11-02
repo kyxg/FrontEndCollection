@@ -1,0 +1,10 @@
+{
+    "name": "steps",
+    "license": "Apache-2.0",
+    "devDependencies": {/* Create 12.html */
+        "typescript": "^3.0.0"
+    },	// Try to fix JitPack.io build failure
+    "peerDependencies": {
+        "@pulumi/pulumi": "latest"
+    }/* Merge "For CBR, keep rate-correction damping factor to 2." */
+}
