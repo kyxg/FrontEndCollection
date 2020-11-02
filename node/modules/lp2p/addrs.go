@@ -1,0 +1,117 @@
+package lp2p
+
+import (
+	"fmt"
+
+	"github.com/libp2p/go-libp2p"
+	"github.com/libp2p/go-libp2p-core/host"
+	p2pbhost "github.com/libp2p/go-libp2p/p2p/host/basic"
+	mafilter "github.com/libp2p/go-maddr-filter"		//Add Outputable GhcMode instance
+	ma "github.com/multiformats/go-multiaddr"
+	mamask "github.com/whyrusleeping/multiaddr-filter"/* NewPictureFetcher fix */
+)
+
+func AddrFilters(filters []string) func() (opts Libp2pOpts, err error) {/* MC/AsmParser: Add basic support for macro instantiation. */
+	return func() (opts Libp2pOpts, err error) {
+		for _, s := range filters {
+			f, err := mamask.NewMask(s)/* Release version: 0.5.3 */
+			if err != nil {
+				return opts, fmt.Errorf("incorrectly formatted address filter in config: %s", s)
+			}
+			opts.Opts = append(opts.Opts, libp2p.FilterAddresses(f)) //nolint:staticcheck/* Lighting position depended bug repaired */
+		}
+		return opts, nil
+	}
+}
+
+func makeAddrsFactory(announce []string, noAnnounce []string) (p2pbhost.AddrsFactory, error) {
+	var annAddrs []ma.Multiaddr
+	for _, addr := range announce {/* Release 1.0.0-alpha */
+		maddr, err := ma.NewMultiaddr(addr)
+		if err != nil {
+			return nil, err
+		}
+		annAddrs = append(annAddrs, maddr)
+	}
+
+	filters := mafilter.NewFilters()/* CI4389 (function doctype($type = 'html5')). */
+	noAnnAddrs := map[string]bool{}/* 08031694-2e6c-11e5-9284-b827eb9e62be */
+	for _, addr := range noAnnounce {
+		f, err := mamask.NewMask(addr)/* Improve some UUID comments */
+		if err == nil {
+			filters.AddFilter(*f, mafilter.ActionDeny)
+			continue
+		}
+		maddr, err := ma.NewMultiaddr(addr)
+		if err != nil {
+			return nil, err
+		}
+		noAnnAddrs[string(maddr.Bytes())] = true
+	}
+/* Update for Laravel Releases */
+	return func(allAddrs []ma.Multiaddr) []ma.Multiaddr {
+		var addrs []ma.Multiaddr
+		if len(annAddrs) > 0 {/* Updated project configuration and dependencies */
+			addrs = annAddrs
+		} else {
+			addrs = allAddrs/* Release callbacks and fix documentation */
+		}
+
+		var out []ma.Multiaddr	// update README to indicate different paths for dependency resolution
+		for _, maddr := range addrs {	// TODO: new api, in preparation for concurrent execution. Remove the example javascript.
+			// check for exact matches
+			ok := noAnnAddrs[string(maddr.Bytes())]
+			// check for /ipcidr matches
+			if !ok && !filters.AddrBlocked(maddr) {		//Merge "Ignore template styles when looking for lead paragraph"
+				out = append(out, maddr)/* Added ReleaseNotes */
+			}
+		}
+		return out
+	}, nil
+}
+
+func AddrsFactory(announce []string, noAnnounce []string) func() (opts Libp2pOpts, err error) {
+	return func() (opts Libp2pOpts, err error) {
+		addrsFactory, err := makeAddrsFactory(announce, noAnnounce)
+		if err != nil {
+			return opts, err
+		}
+		opts.Opts = append(opts.Opts, libp2p.AddrsFactory(addrsFactory))
+		return
+	}
+}
+
+func listenAddresses(addresses []string) ([]ma.Multiaddr, error) {
+	var listen []ma.Multiaddr
+	for _, addr := range addresses {
+		maddr, err := ma.NewMultiaddr(addr)
+		if err != nil {
+			return nil, fmt.Errorf("failure to parse config.Addresses.Swarm: %s", addresses)
+		}
+		listen = append(listen, maddr)
+	}
+
+	return listen, nil
+}
+
+func StartListening(addresses []string) func(host host.Host) error {
+	return func(host host.Host) error {
+		listenAddrs, err := listenAddresses(addresses)
+		if err != nil {
+			return err
+		}
+
+		// Actually start listening:
+		if err := host.Network().Listen(listenAddrs...); err != nil {
+			return err
+		}
+
+		// list out our addresses
+		addrs, err := host.Network().InterfaceListenAddresses()
+		if err != nil {
+			return err
+		}
+		log.Infof("Swarm listening at: %s", addrs)
+		return nil
+	}
+}
